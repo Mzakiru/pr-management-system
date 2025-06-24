@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>📅 Activities</h2>
+<ul>
+    {% for activity in records %}
+        <li>{{ activity }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,3 +1,7 @@
+from colorama import Fore, Style, init
+import time
+init(autoreset=True)
+
 import os
 from datetime import datetime
 import re
@@ -5,18 +9,26 @@ from fpdf import FPDF
 
 # === Login Function ===
 def login():
-    USERNAME = "admin"
-    PASSWORD = "admin123"
+    if not os.path.exists("users.txt"):
+        print("❌ User file not found! Create 'users.txt' with username|password|role.")
+        return False
 
     print("==== PR SYSTEM LOGIN ====")
-    for attempt in range(3):
+    for _ in range(3):
         user = input("Username: ").strip()
         pwd = input("Password: ").strip()
-        if user == USERNAME and pwd == PASSWORD:
-            print("✅ Login successful!\n")
-            return True
-        else:
-            print("❌ Incorrect credentials. Try again.")
+
+        with open("users.txt", "r", encoding="utf-8") as f:
+            for line in f:
+                if '|' not in line:
+                    continue
+                u, p, role = line.strip().split("|")
+                if u == user and p == pwd:
+                    print(f"✅ Login successful! Welcome {role}.\n")
+                    return True
+
+        print("❌ Invalid credentials. Try again.")
+    
     print("Too many failed attempts. Exiting.")
     return False
 

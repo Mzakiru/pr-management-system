@@ -1,0 +1,2 @@
+admin|admin123|PR Head
+assistant|pass456|assistant
